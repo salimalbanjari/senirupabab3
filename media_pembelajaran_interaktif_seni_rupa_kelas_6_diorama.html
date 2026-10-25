@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Seni Rupa Kelas 6 SD - Bab 3: Ideku, Gagasanku (Diorama 3D)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka (Display Ceria) & Plus Jakarta Sans (Body Text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            yellow: '#F59E0B',
+                            orange: '#F97316',
+                            green: '#10B981',
+                            teal: '#0D9488',
+                            blue: '#0284C7',
+                            purple: '#8B5CF6',
+                            bg: '#FFFBEB',
+                            dark: '#1E293B'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F3F4F6;
+            color: #1E293B;
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FEF3C7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #F59E0B;
+            border-radius: 999px;
+        }
+
+        /* Responsive Canvas & Touch Target Optimizations */
+        .touch-btn {
+            min-height: 48px;
+            min-width: 48px;
+        }
+        @media (min-width: 1024px) {
+            .touch-btn {
+                min-height: 56px;
+                min-width: 56px;
+            }
+        }
+
+        /* Custom Animations */
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-bounce-subtle {
+            animation: bounce-subtle 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.8); }
+        }
+        .glow-effect {
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* Drag and Drop Styling */
+        .draggable-item {
+            cursor: grab;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .draggable-item:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+        }
+        .drop-zone {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .drop-zone.drag-over {
+            background-color: #FEF3C7 !important;
+            border-color: #F59E0B !important;
+        }
+    </style>
+</head>
+<body class="bg-amber-50 min-h-screen flex flex-col justify-between selection:bg-amber-200">
+
+    <!-- TOP HEADER / BAR UTAMA (Terlihat di Desktop & FID) -->
+    <header class="bg-white border-b-4 border-amber-400 sticky top-0 z-40 shadow-sm px-4 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-amber-500 rounded-2xl flex items-center justify-center text-white text-xl md:text-2xl font-bold shadow-md">
+                    🎨
+                </div>
+                <div>
+                    <h1 class="font-display font-bold text-base md:text-xl text-slate-800 leading-tight">Seni Rupa SD Kelas 6</h1>
+                    <p class="text-xs md:text-sm text-slate-500 font-medium">Bab 3: Ideku, Gagasanku (Karya Diorama 3D)</p>
+                </div>
+            </div>
+
+            <!-- Header Stats & Teacher Info -->
+            <div class="flex items-center space-x-3 md:space-x-6">
+                <!-- Badge Skor Pemain -->
+                <div class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-full flex items-center space-x-2">
+                    <span class="text-amber-600 text-lg">⭐</span>
+                    <span class="font-display font-bold text-amber-800 text-sm md:text-base" id="top-score-display">0 Poin</span>
+                </div>
+                
+                <!-- Pembuat -->
+                <div class="hidden md:flex flex-col text-right border-l pl-4 border-slate-200">
+                    <span class="text-xs text-slate-400 font-semibold">Guru Pengampu</span>
+                    <span class="text-sm font-bold text-slate-700">M. Agus Salim, S.Pd</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER (AREA KONTEN DINAMIS) -->
+    <main class="flex-grow max-w-6xl w-full mx-auto p-4 md:p-6 flex flex-col justify-center">
+
+        <!-- 1. HALAMAN COVER -->
+        <section id="page-cover" class="page-section space-y-6 text-center">
+            <div class="bg-white rounded-3xl p-6 md:p-10 shadow-xl border-4 border-amber-300 relative overflow-hidden max-w-4xl mx-auto">
+                <!-- Background Decorative Elements -->
+                <div class="absolute -top-10 -left-10 w-32 h-32 bg-yellow-200 rounded-full blur-2xl opacity-60"></div>
+                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-emerald-200 rounded-full blur-2xl opacity-60"></div>
+                
+                <!-- Badge Bab -->
+                <span class="inline-block bg-emerald-100 text-emerald-800 font-display font-bold text-sm md:text-base px-4 py-1.5 rounded-full mb-4 border border-emerald-300">
+                    Fase C • Kelas 6 SD • Kurikulum Merdeka
+                </span>
+
+                <!-- Title -->
+                <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-800 mb-3 tracking-wide leading-tight">
+                    IDEKU, GAGASANKU! 🌿📦
+                </h1>
+                <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto mb-6 font-medium">
+                    Belajar Menemukan Ide Berkarya Diorama 3D Bertema Lingkungan dari Bahan Daur Ulang & Alam Sederhana.
+                </p>
+
+                <!-- Visual Focal Point (Maskot Kiki si Kancil Seniman) -->
+                <div class="my-6 relative flex justify-center items-center">
+                    <div class="w-48 h-48 md:w-64 md:h-64 bg-amber-100 rounded-full flex items-center justify-center border-4 border-dashed border-amber-400 relative shadow-inner">
+                        <svg class="w-36 h-36 md:w-48 md:h-48" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Character Illustration Placeholder (Custom Mascot Kiki) -->
+                            <circle cx="100" cy="100" r="80" fill="#FDE68A"/>
+                            <!-- Head & Ears -->
+                            <path d="M60 70 C50 30 75 20 80 50 Z" fill="#D97706"/>
+                            <path d="M140 70 C150 30 125 20 120 50 Z" fill="#D97706"/>
+                            <circle cx="100" cy="110" r="55" fill="#B45309"/>
+                            <circle cx="100" cy="118" r="35" fill="#FEF3C7"/>
+                            <!-- Eyes -->
+                            <circle cx="82" cy="100" r="9" fill="#1E293B"/>
+                            <circle cx="118" cy="100" r="9" fill="#1E293B"/>
+                            <circle cx="85" cy="97" r="3" fill="white"/>
+                            <circle cx="121" cy="97" r="3" fill="white"/>
+                            <!-- Smile -->
+                            <path d="M90 125 Q100 135 110 125" stroke="#1E293B" stroke-width="4" stroke-linecap="round"/>
+                            <!-- Beret Hat -->
+                            <path d="M60 65 Q100 40 140 65 Q145 80 100 75 Q55 80 60 65 Z" fill="#EF4444"/>
+                            <circle cx="100" cy="50" r="6" fill="#DC2626"/>
+                            <!-- Paint Brush in mouth -->
+                            <rect x="115" y="115" width="45" height="6" fill="#854D0E" transform="rotate(15 115 115)"/>
+                            <path d="M158 126 L170 129 L162 120 Z" fill="#10B981"/>
+                        </svg>
+                        <!-- Speech Bubble -->
+                        <div class="absolute -top-2 -right-4 bg-white border-2 border-slate-700 px-3 py-1.5 rounded-2xl shadow-md text-xs md:text-sm font-bold text-slate-800 animate-bounce-subtle">
+                            Halo! Aku Kiki! 👋
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Identitas Pembuat -->
+                <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-3 max-w-md mx-auto mb-8">
+                    <p class="text-xs text-slate-500">Bahan Ajar Interaktif Disusun Oleh:</p>
+                    <p class="text-sm md:text-base font-bold text-amber-900">Muhammad Agus Salim, S.Pd</p>
+                    <p class="text-xs text-amber-700">SD Negeri 1 Contoh • Alokasi Waktu: 3 x 35 Menit</p>
+                </div>
+
+                <!-- CTA Start Button -->
+                <button onclick="navigateTo('page-petunjuk')" class="touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-display font-bold text-xl md:text-2xl px-10 py-4 rounded-2xl shadow-lg hover:shadow-2xl transition transform active:scale-95 glow-effect inline-flex items-center space-x-3">
+                    <span>MULAI PETUALANGAN</span>
+                    <i class="fa-solid font-bold fa-circle-play text-2xl"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. PETUNJUK PENGGUNAAN MEDIA -->
+        <section id="page-petunjuk" class="page-section hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-300">
+                <div class="flex items-center space-x-3 mb-6 border-b pb-4 border-slate-100">
+                    <span class="text-3xl">📋</span>
+                    <div>
+                        <h2 class="font-display font-bold text-2xl text-slate-800">Petunjuk Penggunaan Media</h2>
+                        <p class="text-xs md:text-sm text-slate-500">Pahami tombol dan alur belajar sebelum memulai.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-amber-400 text-white rounded-full flex items-center justify-center text-xl font-bold mb-3 shadow">1</div>
+                        <h3 class="font-display font-bold text-slate-800 mb-1">Amati & Pelajari</h3>
+                        <p class="text-xs md:text-sm text-slate-600">Simak cerita apersepsi dan baca materi konsep diorama secara seksama.</p>
+                    </div>
+
+                    <div class="bg-blue-50 p-4 rounded-2xl border border-blue-200 flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center text-xl font-bold mb-3 shadow">2</div>
+                        <h3 class="font-display font-bold text-slate-800 mb-1">Aktif Mencoba</h3>
+                        <p class="text-xs md:text-sm text-slate-600">Ikuti Aktivitas Drag-and-Drop, Game Pilah Bahan, dan Latihan Interaktif.</p>
+                    </div>
+
+                    <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 flex flex-col items-center text-center">
+                        <div class="w-12 h-12 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xl font-bold mb-3 shadow">3</div>
+                        <h3 class="font-display font-bold text-slate-800 mb-1">Evaluasi & Refleksi</h3>
+                        <p class="text-xs md:text-sm text-slate-600">Kerjakan Kuis Akhir 10 Soal dan tulis refleksi perasaan belajarmu!</p>
+                    </div>
+                </div>
+
+                <!-- Penjelasan Tombol Navigasi -->
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-6">
+                    <h4 class="font-display font-bold text-sm text-slate-700 mb-3">Simbol Navigasi Utama:</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs md:text-sm">
+                        <div class="flex items-center space-x-2"><span class="bg-amber-200 p-2 rounded-lg">🏠</span><span>Beranda / Cover</span></div>
+                        <div class="flex items-center space-x-2"><span class="bg-amber-200 p-2 rounded-lg">📖</span><span>Materi Belajar</span></div>
+                        <div class="flex items-center space-x-2"><span class="bg-amber-200 p-2 rounded-lg">🎯</span><span>Aktivitas Hands-On</span></div>
+                        <div class="flex items-center space-x-2"><span class="bg-amber-200 p-2 rounded-lg">❓</span><span>Kuis Evaluasi</span></div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-4">
+                    <button onclick="navigateTo('page-cover')" class="touch-btn bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl">
+                        ⬅ Kembali
+                    </button>
+                    <button onclick="navigateTo('page-apersepsi')" class="touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl shadow-md">
+                        Lanjut ke Apersepsi ➡
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. APERSEPSI & PERTANYAAN PEMANTIK -->
+        <section id="page-apersepsi" class="page-section hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-300">
+                <!-- Header Apersepsi -->
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl">💡</span>
+                    <h2 class="font-display font-bold text-2xl text-slate-800">Mari Mengamati Lingkungan!</h2>
+                </div>
+
+                <!-- Story Block dengan Maskot -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mb-6">
+                    <div class="md:col-span-4 flex flex-col items-center bg-amber-50 p-4 rounded-2xl border border-amber-200 text-center">
+                        <div class="w-28 h-28 bg-amber-200 rounded-full flex items-center justify-center text-5xl mb-2">
+                            🐿️
+                        </div>
+                        <span class="font-display font-bold text-amber-900">Kiki si Kancil</span>
+                        <span class="text-xs text-amber-700">Pemandu Belajar Seni</span>
+                    </div>
+
+                    <div class="md:col-span-8 bg-amber-100/60 p-5 rounded-2xl border-2 border-amber-300 relative">
+                        <div class="hidden md:block absolute -left-3 top-10 w-0 h-0 border-t-8 border-t-transparent border-r-12 border-r-amber-300 border-b-8 border-b-transparent"></div>
+                        <p class="text-slate-800 text-sm md:text-base leading-relaxed font-medium mb-3">
+                            "Teman-teman kelas 6, coba lihat di sekeliling sekolah atau rumahmu! Pernahkah kamu melihat <strong>kardus bekas, ranting kering, atau botol plastik</strong> yang menumpuk tak terpakai?"
+                        </p>
+                        <p class="text-slate-800 text-sm md:text-base leading-relaxed font-medium">
+                            "Tahukah kamu, barang daur ulang dan bahan alam di sekitar kita bisa kita ubah menjadi sebuah miniatur 3 dimensi berbentuk panggung cerita yang indah, yang disebut <strong>DIORAMA</strong>!"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pertanyaan Pemantik Interaktif -->
+                <div class="bg-emerald-50 rounded-2xl p-5 border-2 border-emerald-300 space-y-4">
+                    <h3 class="font-display font-bold text-emerald-900 text-base md:text-lg flex items-center space-x-2">
+                        <span>🤔</span>
+                        <span>Pertanyaan Pemantik:</span>
+                    </h3>
+                    <p class="text-slate-700 text-sm md:text-base">
+                        Jika kamu diminta membuat diorama panggung kecil bertema <strong>"Hutan Asri"</strong> atau <strong>"Bawah Laut"</strong>, bahan bekas apa yang paling pertama kamu bayangkan bisa dipakai?
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                        <button onclick="selectApersepsiOption(this, 'Luar biasa! Kardus sepatu sangat pas untuk bingkai panggung 3D diorama.')" class="touch-btn bg-white hover:bg-emerald-100 border-2 border-emerald-200 rounded-xl p-3 text-sm font-bold text-slate-700 transition text-left">
+                            📦 Kardus Sepatu Bekas
+                        </button>
+                        <button onclick="selectApersepsiOption(this, 'Kreatif! Ranting & daun kering memberi tekstur alami yang realistis.')" class="touch-btn bg-white hover:bg-emerald-100 border-2 border-emerald-200 rounded-xl p-3 text-sm font-bold text-slate-700 transition text-left">
+                            🍂 Ranting & Daun Kering
+                        </button>
+                        <button onclick="selectApersepsiOption(this, 'Bagus sekali! Plastic & tutupan botol cocok untuk dekorasi warna-warni.')" class="touch-btn bg-white hover:bg-emerald-100 border-2 border-emerald-200 rounded-xl p-3 text-sm font-bold text-slate-700 transition text-left">
+                            🧴 Botol & Tutup Plastik
+                        </button>
+                    </div>
+                    <div id="apersepsi-feedback" class="hidden p-3 bg-emerald-200 text-emerald-900 rounded-xl text-sm font-bold animate-bounce-subtle"></div>
+                </div>
+
+                <!-- Navigasi Bottom -->
+                <div class="flex justify-between items-center pt-4">
+                    <button onclick="navigateTo('page-petunjuk')" class="touch-btn bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl">
+                        ⬅ Kembali
+                    </button>
+                    <button onclick="navigateTo('page-materi-1')" class="touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl shadow-md">
+                        Mulai Pelajari Materi ➡
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. MATERI INTI (CHUNK 1: Apa Itu Diorama & Unsur 3D) -->
+        <section id="page-materi-1" class="page-section hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-300">
+                <!-- Header Status Materi -->
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <span class="text-xs md:text-sm font-bold text-amber-600 bg-amber-100 px-3 py-1 rounded-full">Bagian 1 dari 2: Konsep Diorama</span>
+                    <span class="text-xs text-slate-400">Target Belajar: TP 3.1</span>
+                </div>
+
+                <h2 class="font-display font-bold text-2xl md:text-3xl text-slate-800 mb-4">
+                    1. Mengenal Karya Tiga Dimensi: DIORAMA 🖼️📦
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            <h3 class="font-display font-bold text-amber-600 text-lg mb-2">Pengertian Diorama</h3>
+                            <p class="text-slate-700 text-sm md:text-base leading-relaxed">
+                                <strong>Diorama</strong> adalah sajian pemandangan miniatur tiga dimensi (3D) yang menggambarkan suatu adegan cerita, pemandangan alam, atau peristiwa sejarah di dalam sebuah panggung bingkai kecil (seperti kotak kardus).
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            <h3 class="font-display font-bold text-emerald-600 text-lg mb-2">Mengapa Disebut Karya 3D?</h3>
+                            <ul class="text-slate-700 text-sm md:text-base space-y-2">
+                                <li class="flex items-center space-x-2"><span class="text-emerald-500">✓</span><span>Memiliki <strong>Panjang</strong></span></li>
+                                <li class="flex items-center space-x-2"><span class="text-emerald-500">✓</span><span>Memiliki <strong>Lebar</strong></span></li>
+                                <li class="flex items-center space-x-2"><span class="text-emerald-500">✓</span><span>Memiliki <strong>Tinggi/Kedalaman (Ruang)</strong></span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Visual Mockup Diorama -->
+                    <div class="bg-amber-100/50 p-6 rounded-2xl border-2 border-dashed border-amber-400 flex flex-col items-center justify-center text-center">
+                        <div class="w-full h-48 bg-amber-200 rounded-xl relative overflow-hidden border-4 border-amber-700 shadow-md flex items-end justify-center">
+                            <!-- Latar Belakang Panggung Diorama -->
+                            <div class="absolute inset-0 bg-gradient-to-b from-blue-300 to-emerald-200"></div>
+                            <div class="absolute top-3 left-4 text-3xl">☁️</div>
+                            <div class="absolute top-2 right-6 text-3xl">☀️</div>
+                            <!-- Foreground Element -->
+                            <div class="relative z-10 flex space-x-4 mb-2 items-end">
+                                <span class="text-4xl">🌳</span>
+                                <span class="text-3xl">🦊</span>
+                                <span class="text-4xl">🪨</span>
+                            </div>
+                        </div>
+                        <p class="text-xs font-bold text-amber-900 mt-3">Simulasi Panggung Diorama 3D dalam Kotak Kardus</p>
+                    </div>
+                </div>
+
+                <!-- Prinsip Kedalaman Kedudukan Layer (Background, Midground, Foreground) -->
+                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-200">
+                    <h3 class="font-display font-bold text-blue-900 text-base md:text-lg mb-3">Tiga Papan Layer Kedalaman Diorama:</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs md:text-sm">
+                        <div class="bg-white p-3 rounded-xl border border-blue-200">
+                            <span class="font-bold text-blue-700 block mb-1">1. Latar Belakang (Background)</span>
+                            <p class="text-slate-600">Dinding paling belakang kotak (gambar langit, gunung, awan).</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-blue-200">
+                            <span class="font-bold text-blue-700 block mb-1">2. Latar Tengah (Midground)</span>
+                            <p class="text-slate-600">Objek pendukung di tengah (pohon, rumah, bukit kecil).</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-blue-200">
+                            <span class="font-bold text-blue-700 block mb-1">3. Latar Depan (Foreground)</span>
+                            <p class="text-slate-600">Tokoh atau objek utama di paling depan (hewan, manusia, batu).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigasi Bottom -->
+                <div class="flex justify-between items-center pt-4">
+                    <button onclick="navigateTo('page-apersepsi')" class="touch-btn bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl">
+                        ⬅ Kembali
+                    </button>
+                    <button onclick="navigateTo('page-materi-2')" class="touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl shadow-md">
+                        Lanjut: Bahan Diorama ➡
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. MATERI INTI (CHUNK 2: Pemilihan Bahan Sekitar & Prosedur) -->
+        <section id="page-materi-2" class="page-section hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-300">
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <span class="text-xs md:text-sm font-bold text-amber-600 bg-amber-100 px-3 py-1 rounded-full">Bagian 2 dari 2: Bahan & Prosedur Berkarya</span>
+                    <span class="text-xs text-slate-400">Target Belajar: TP 3.1</span>
+                </div>
+
+                <h2 class="font-display font-bold text-2xl md:text-3xl text-slate-800 mb-4">
+                    2. Menentukan Bahan & Langkah Berkarya ✂️🌿
+                </h2>
+
+                <!-- Kategori Bahan (Daur Ulang vs Bahan Alam) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Bahan Daur Ulang -->
+                    <div class="bg-emerald-50 p-5 rounded-2xl border-2 border-emerald-300">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="text-3xl">♻️</span>
+                            <h3 class="font-display font-bold text-emerald-900 text-lg">Bahan Daur Ulang (Buatan)</h3>
+                        </div>
+                        <ul class="text-slate-700 text-sm space-y-2">
+                            <li class="bg-white p-2.5 rounded-lg border border-emerald-200">📦 <strong>Kardus Bekas:</strong> Panggung kotak utama & dinding kedalaman.</li>
+                            <li class="bg-white p-2.5 rounded-lg border border-emerald-200">🧴 <strong>Tutup Botol / Sedotan:</strong> Miniatur kursi, tiang, atau roda.</li>
+                            <li class="bg-white p-2.5 rounded-lg border border-emerald-200">📰 <strong>Kertas Koram / Plastik:</strong> Efek gelombang air dan relief tanah.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Bahan Alam -->
+                    <div class="bg-amber-50 p-5 rounded-2xl border-2 border-amber-300">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="text-3xl">🍁</span>
+                            <h3 class="font-display font-bold text-amber-900 text-lg">Bahan Alam (Sekitar)</h3>
+                        </div>
+                        <ul class="text-slate-700 text-sm space-y-2">
+                            <li class="bg-white p-2.5 rounded-lg border border-amber-200">🪵 <strong>Ranting Kering:</strong> Batang pohon miniatur yang kuat.</li>
+                            <li class="bg-white p-2.5 rounded-lg border border-amber-200">🍃 <strong>Daun Kering / Semak:</strong> Dedaunan rimbun & hiasan taman.</li>
+                            <li class="bg-white p-2.5 rounded-lg border border-amber-200">🪨 <strong>Kerikil & Pasir:</strong> Tekstur tebing batu atau dasar laut.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Prosedur/Langkah Pembuatan -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <h3 class="font-display font-bold text-slate-800 text-base md:text-lg mb-4">Prosedur Pembuatan Diorama (4 Tahap):</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs md:text-sm">
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                            <span class="w-8 h-8 bg-amber-400 text-white font-bold rounded-full inline-flex items-center justify-center mb-2">1</span>
+                            <h4 class="font-bold text-slate-800">Menentukan Gagasan</h4>
+                            <p class="text-slate-500 text-xs mt-1">Pilih tema cerita (misal: Hutan / Ekosistem).</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                            <span class="w-8 h-8 bg-amber-400 text-white font-bold rounded-full inline-flex items-center justify-center mb-2">2</span>
+                            <h4 class="font-bold text-slate-800">Menyiapkan Kotak</h4>
+                            <p class="text-slate-500 text-xs mt-1">Gunting kotak kardus sebagai panggung terbuka.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                            <span class="w-8 h-8 bg-amber-400 text-white font-bold rounded-full inline-flex items-center justify-center mb-2">3</span>
+                            <h4 class="font-bold text-slate-800">Membuat Objek & Layer</h4>
+                            <p class="text-slate-500 text-xs mt-1">Buat latar belakang, midground, & tokoh depan.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                            <span class="w-8 h-8 bg-amber-400 text-white font-bold rounded-full inline-flex items-center justify-center mb-2">4</span>
+                            <h4 class="font-bold text-slate-800">Perakitan (Finishing)</h4>
+                            <p class="text-slate-500 text-xs mt-1">Perekatan objek dengan lem hingga kokoh.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigasi Bottom -->
+                <div class="flex justify-between items-center pt-4">
+                    <button onclick="navigateTo('page-materi-1')" class="touch-btn bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl">
+                        ⬅ Kembali
+                    </button>
+                    <button onclick="navigateTo('page-aktivitas')" class="touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl shadow-md">
+                        Lanjut ke Aktivitas ➡
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. AKTIVITAS INTERAKTIF: DRAG AND DROP TATA LAYER DIORAMA -->
+        <section id="page-aktivitas" class="page-section hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-300">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl">🎯</span>
+                    <div>
+                        <h2 class="font-display font-bold text-2xl text-slate-800">Aktivitas Hands-On: Susun Panggung Diorama!</h2>
+                        <p class="text-xs md:text-sm text-slate-500">Tarik (drag) atau klik elemen di bawah ke dalam zona layer yang sesuai!</p>
+                    </div>
+                </div>
+
+                <!-- Container Drag and Drop -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Objek-objek yang dapat ditarik -->
+                    <div class="lg:col-span-4 bg-amber-50 p-4 rounded-2xl border-2 border-amber-200 space-y-3">
+                        <h3 class="font-display font-bold text-amber-900 text-sm">Pilihan Objek Seni:</h3>
+                        <div id="drag-items-container" class="grid grid-cols-2 gap-2">
+                            <div draggable="true" ondragstart="drag(event)" data-layer="bg" id="item-sky" class="draggable-item bg-white p-3 rounded-xl border-2 border-amber-300 shadow-sm text-center font-bold text-xs md:text-sm text-slate-700">
+                                ☁️ Gambar Langit & Awan
+                            </div>
+                            <div draggable="true" ondragstart="drag(event)" data-layer="mid" id="item-tree" class="draggable-item bg-white p-3 rounded-xl border-2 border-amber-300 shadow-sm text-center font-bold text-xs md:text-sm text-slate-700">
+                                🌳 Pohon Ranting Daur Ulang
+                            </div>
+                            <div draggable="true" ondragstart="drag(event)" data-layer="fore" id="item-tiger" class="draggable-item bg-white p-3 rounded-xl border-2 border-amber-300 shadow-sm text-center font-bold text-xs md:text-sm text-slate-700">
+                                🐯 Tokoh Harimau Kardus
+                            </div>
+                            <div draggable="true" ondragstart="drag(event)" data-layer="fore" id="item-rock" class="draggable-item bg-white p-3 rounded-xl border-2 border-amber-300 shadow-sm text-center font-bold text-xs md:text-sm text-slate-700">
+                                🪨 Batu Kerikil Depan
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Drop Zones (Kotak Diorama 3 Layer) -->
+                    <div class="lg:col-span-8 bg-slate-900 p-4 rounded-2xl border-4 border-amber-600 shadow-inner flex flex-col space-y-3 relative">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-widest text-center">--- Panggung Diorama 3D ---</span>
+                        
+                        <!-- Drop Zone Latar Belakang -->
+                        <div ondrop="drop(event, 'bg')" ondragover="allowDrop(event)" class="drop-zone bg-slate-800 border-2 border-dashed border-blue-400 p-3 rounded-xl min-h-[70px] flex items-center justify-between">
+                            <span class="text-xs font-bold text-blue-300">Layer 1: Latar Belakang (Background)</span>
+                            <div class="dropped-target flex space-x-2"></div>
+                        </div>
+
+                        <!-- Drop Zone Latar Tengah -->
+                        <div ondrop="drop(event, 'mid')" ondragover="allowDrop(event)" class="drop-zone bg-slate-800 border-2 border-dashed border-emerald-400 p-3 rounded-xl min-h-[70px] flex items-center justify-between">
+                            <span class="text-xs font-bold text-emerald-300">Layer 2: Latar Tengah (Midground)</span>
+                            <div class="dropped-target flex space-x-2"></div>
+                        </div>
+
+                        <!-- Drop Zone Latar Depan -->
+                        <div ondrop="drop(event, 'fore')" ondragover="allowDrop(event)" class="drop-zone bg-slate-800 border-2 border-dashed border-amber-400 p-3 rounded-xl min-h-[70px] flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-300">Layer 3: Latar Depan (Foreground)</span>
+                            <div class="dropped-target flex space-x-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="drag-feedback" class="hidden p-3 rounded-xl font-bold text-sm text-center"></div>
+
+                <!-- Navigasi Bottom -->
+                <div class="flex justify-between items-center pt-4">
+                    <button onclick="navigateTo('page-materi-2')" class="touch-btn bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl">
+                        ⬅ Kembali
+                    </button>
+                    <button onclick="navigateTo('page-game')" class="touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl shadow-md">
+                        Lanjut ke Game Edukasi 🎮 ➡
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. GAME EDUKASI: PILAH BAHAN DIORAMA -->
+        <section id="page-game" class="page-section hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-300 text-center">
+                <div class="flex items-center justify-center space-x-3 mb-2">
+                    <span class="text-3xl">🎮</span>
+                    <h2 class="font-display font-bold text-2xl md:text-3xl text-slate-800">Mini Game: Pilah Bahan Diorama!</h2>
+                </div>
+                <p class="text-xs md:text-sm text-slate-500 max-w-lg mx-auto mb-6">
+                    Pilah apakah item di bawah termasuk <strong>"Bahan Alam"</strong> atau <strong>"Bahan Daur Ulang Buatan"</strong>!
+                </p>
+
+                <!-- Game Canvas Box -->
+                <div class="max-w-md mx-auto bg-amber-50 p-6 rounded-3xl border-4 border-amber-300 shadow-md relative">
+                    <!-- Question Item -->
+                    <div id="game-item-card" class="bg-white border-2 border-amber-400 p-6 rounded-2xl shadow-lg mb-6 transform transition">
+                        <div id="game-item-emoji" class="text-6xl mb-2">🍂</div>
+                        <div id="game-item-name" class="font-display font-bold text-xl text-slate-800">Daun Kering Kering</div>
+                    </div>
+
+                    <!-- Choice Buttons -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="checkGameAnswer('alam')" class="touch-btn bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-display font-bold p-4 rounded-2xl shadow-md text-sm md:text-base">
+                            🌿 BAHAN ALAM
+                        </button>
+                        <button onclick="checkGameAnswer('daur_ulang')" class="touch-btn bg-blue-500 hover:bg-blue-600 active:scale-95 text-white font-display font-bold p-4 rounded-2xl shadow-md text-sm md:text-base">
+                            📦 DAUR ULANG
+                        </button>
+                    </div>
+
+                    <!-- Game Feedback Banner -->
+                    <div id="game-feedback-banner" class="hidden mt-4 p-3 rounded-xl font-bold text-sm"></div>
+                </div>
+
+                <!-- Navigasi Bottom -->
+                <div class="flex justify-between items-center pt-6">
+                    <button onclick="navigateTo('page-aktivitas')" class="touch-btn bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl">
+                        ⬅ Kembali
+                    </button>
+                    <button onclick="navigateTo('page-latihan')" class="touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl shadow-md">
+                        Lanjut ke Latihan 📝 ➡
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. LATIHAN INTERAKTIF DENGAN FEEDBACK LANGSUNG -->
+        <section id="page-latihan" class="page-section hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-300">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl">📝</span>
+                    <div>
+                        <h2 class="font-display font-bold text-2xl text-slate-800">Latihan Pemahaman Interaktif</h2>
+                        <p class="text-xs md:text-sm text-slate-500">Uji pemahamanmu sebelum mengerjakan kuis evaluasi akhir!</p>
+                    </div>
+                </div>
+
+                <!-- Soal Latihan Single Item with Immediate Feedback -->
+                <div class="space-y-6">
+                    <!-- Question 1 -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
+                        <p class="font-bold text-slate-800 text-sm md:text-base">
+                            1. Alat utama apa yang paling aman digunakan siswa kelas 6 SD untuk merekatkan bahan kayu/ranting pada kardus diorama?
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                            <button onclick="answerLatihan(1, false, this, 'Kurang tepat. Lem kertas kurang kuat untuk merekatkan bahan kayu/ranting.')" class="latihan-opt-1 bg-white hover:bg-amber-100 p-3 rounded-xl border border-slate-300 text-left font-medium">
+                                A. Lem Kertas Biasa
+                            </button>
+                            <button onclick="answerLatihan(1, true, this, 'Benar sekali! Lem kayu/lem serbaguna memiliki daya rekat kuat untuk bahan alam & kardus.')" class="latihan-opt-1 bg-white hover:bg-amber-100 p-3 rounded-xl border border-slate-300 text-left font-medium">
+                                B. Lem Kayu / Lem Serbaguna
+                            </button>
+                        </div>
+                        <div id="latihan-fb-1" class="hidden p-3 rounded-xl text-xs md:text-sm font-bold"></div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
+                        <p class="font-bold text-slate-800 text-sm md:text-base">
+                            2. Manakah urutan prosedur pembuatan karya diorama yang tepat?
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                            <button onclick="answerLatihan(2, true, this, 'Tepat sekali! Ide & Sketsa ➔ Persiapan Kotak ➔ Pembuatan Layer Objek ➔ Finishing.')" class="latihan-opt-2 bg-white hover:bg-amber-100 p-3 rounded-xl border border-slate-300 text-left font-medium">
+                                A. Menentukan Ide ➔ Siapkan Kotak ➔ Buat Layer Objek ➔ Finishing
+                            </button>
+                            <button onclick="answerLatihan(2, false, this, 'Belum tepat. Kita harus menentukan gagasan dan menyiapkan kotak panggung terlebih dahulu.')" class="latihan-opt-2 bg-white hover:bg-amber-100 p-3 rounded-xl border border-slate-300 text-left font-medium">
+                                B. Finishing ➔ Menentukan Ide ➔ Merakit Layer ➔ Mewarnai
+                            </button>
+                        </div>
+                        <div id="latihan-fb-2" class="hidden p-3 rounded-xl text-xs md:text-sm font-bold"></div>
+                    </div>
+                </div>
+
+                <!-- Navigasi Bottom -->
+                <div class="flex justify-between items-center pt-6">
+                    <button onclick="navigateTo('page-game')" class="touch-btn bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl">
+                        ⬅ Kembali
+                    </button>
+                    <button onclick="navigateTo('page-kuis')" class="touch-btn bg-amber-500 hover:bg-amber-600 text-white font-bold px-8 py-3 rounded-xl shadow-md glow-effect">
+                        Mulai Kuis Akhir ❓ ➡
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. KUIS AKHIR EVALUASI (10 SOAL FORMATIF) -->
+        <section id="page-kuis" class="page-section hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-300">
+                <!-- Progress Header Kuis -->
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-display font-bold text-amber-600 text-sm md:text-base" id="quiz-progress-text">Soal 1 dari 10</span>
+                    <div class="w-1/2 bg-slate-200 h-3 rounded-full overflow-hidden">
+                        <div id="quiz-progress-bar" class="bg-amber-500 h-full w-[10%] transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Container Card Soal Kuis -->
+                <div class="bg-amber-50/60 p-6 rounded-2xl border-2 border-amber-200 min-h-[250px] flex flex-col justify-between">
+                    <div>
+                        <h3 id="quiz-question-text" class="font-display font-bold text-lg md:text-xl text-slate-800 mb-6">
+                            Loading Soal...
+                        </h3>
+
+                        <!-- Options Container -->
+                        <div id="quiz-options-container" class="grid grid-cols-1 gap-3">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Educational Feedback Box -->
+                    <div id="quiz-feedback-box" class="hidden mt-4 p-4 rounded-xl text-sm font-bold border"></div>
+                </div>
+
+                <!-- Navigasi Kuis -->
+                <div class="flex justify-between items-center pt-4">
+                    <button id="quiz-prev-btn" onclick="prevQuizQuestion()" class="touch-btn bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-6 py-3 rounded-xl disabled:opacity-50">
+                        ⬅ Soal Sebelumnya
+                    </button>
+                    <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl shadow-md">
+                        Soal Berikutnya ➡
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. HALAMAN HASIL BELAJAR -->
+        <section id="page-hasil" class="page-section hidden space-y-6 text-center">
+            <div class="bg-white rounded-3xl p-6 md:p-10 shadow-xl border-4 border-amber-300 max-w-3xl mx-auto">
+                <div class="w-24 h-24 bg-amber-400 text-white rounded-full flex items-center justify-center text-5xl mx-auto mb-4 shadow-lg animate-bounce-subtle">
+                    🏆
+                </div>
+
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-slate-800 mb-2">Hasil Evaluasi Belajar</h2>
+                <p class="text-slate-500 text-sm md:text-base mb-6">Selamat! Kamu telah menyelesaikan evaluasi Bab 3 Ideku, Gagasanku!</p>
+
+                <!-- Box Skor Utama -->
+                <div class="bg-amber-50 border-2 border-amber-300 rounded-3xl p-6 max-w-md mx-auto mb-6">
+                    <span class="text-xs uppercase font-bold tracking-widest text-amber-600">Skor Akhir Kamu</span>
+                    <div class="font-display font-extrabold text-5xl md:text-6xl text-amber-700 my-2" id="final-score">0</div>
+                    <span id="score-badge" class="inline-block bg-emerald-200 text-emerald-900 font-bold text-xs md:text-sm px-4 py-1.5 rounded-full">
+                        Hebat Sekali! 🎉
+                    </span>
+                </div>
+
+                <!-- Ringkasan Detail -->
+                <div class="grid grid-cols-2 gap-4 max-w-md mx-auto mb-6 text-sm">
+                    <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+                        <span class="text-slate-500 block text-xs">Jawaban Benar</span>
+                        <span id="correct-count" class="font-bold text-emerald-700 text-lg">0 / 10</span>
+                    </div>
+                    <div class="bg-red-50 border border-red-200 p-3 rounded-xl">
+                        <span class="text-slate-500 block text-xs">Jawaban Salah</span>
+                        <span id="wrong-count" class="font-bold text-red-700 text-lg">0 / 10</span>
+                    </div>
+                </div>
+
+                <!-- Rekomendasi Belajar Pedagogis -->
+                <div id="learning-recommendation" class="bg-blue-50 border border-blue-200 p-4 rounded-2xl text-xs md:text-sm text-blue-900 text-left mb-6">
+                    <!-- Injected by JS based on score -->
+                </div>
+
+                <div class="flex justify-center space-x-4">
+                    <button onclick="navigateTo('page-refleksi')" class="touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-display font-bold px-8 py-3 rounded-xl shadow-md">
+                        Lanjut ke Refleksi Diri 💭 ➡
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11. REFLEKSI PESERTA DIDIK & PENUTUP -->
+        <section id="page-refleksi" class="page-section hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-300">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl">💭</span>
+                    <div>
+                        <h2 class="font-display font-bold text-2xl text-slate-800">Refleksi Belajar Peserta Didik</h2>
+                        <p class="text-xs md:text-sm text-slate-500">Prinsip Mindful & Joyful: Bagikan kesan dan perasaanamu!</p>
+                    </div>
+                </div>
+
+                <!-- Emotion Picker -->
+                <div class="bg-amber-50 p-6 rounded-2xl border border-amber-200 mb-6 text-center space-y-4">
+                    <h3 class="font-display font-bold text-slate-800 text-base">Bagaimana perasaanmu setelah belajar membuat ide karya diorama hari ini?</h3>
+                    <div class="flex justify-center space-x-4 text-4xl">
+                        <button onclick="selectEmojiRefleksi(this, 'Sangat Senang! 😃')" class="emoji-ref-btn hover:scale-125 transition">😃</button>
+                        <button onclick="selectEmojiRefleksi(this, 'Kreatif & Bersemangat! 🎨')" class="emoji-ref-btn hover:scale-125 transition">🎨</button>
+                        <button onclick="selectEmojiRefleksi(this, 'Tertantang! 🤔')" class="emoji-ref-btn hover:scale-125 transition">🤔</button>
+                    </div>
+                </div>
+
+                <!-- Short Answer Box -->
+                <div class="space-y-3 mb-6">
+                    <label class="block font-bold text-slate-700 text-sm">Bahan daur ulang atau bahan alam apa yang paling ingin kamu pakai saat praktek nanti?</label>
+                    <textarea id="refleksi-input" rows="3" class="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-400 focus:outline-none text-sm" placeholder="Tuliskan jawabanmu di sini (misal: Saya mau pakai kardus sepatu dan ranting pohon)..."></textarea>
+                </div>
+
+                <button onclick="submitRefleksi()" class="w-full touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-display font-bold py-3.5 rounded-xl shadow-md mb-6">
+                    Kirim Refleksi Belajar 🚀
+                </button>
+
+                <div id="refleksi-feedback" class="hidden p-4 bg-emerald-100 text-emerald-900 border border-emerald-300 rounded-2xl font-bold text-sm text-center mb-6"></div>
+
+                <!-- Penutup & Credit Footer -->
+                <div class="border-t pt-4 text-center text-xs text-slate-400 space-y-1">
+                    <p class="font-bold text-slate-600">Media Pembelajaran Interaktif Seni Rupa Kelas 6 SD</p>
+                    <p>Disusun oleh: Muhammad Agus Salim, S.Pd • Kurikulum Merdeka 2026</p>
+                    <div class="pt-2">
+                        <button onclick="navigateTo('page-cover')" class="text-amber-600 underline font-bold">Ulangi Media dari Cover</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- NAVIGATION BAR BAWAH / BOTTOM BAR (RESPONSIF MOBILE & FID) -->
+    <footer class="bg-white border-t-2 border-amber-300 sticky bottom-0 z-40 py-2 px-4 shadow-lg">
+        <div class="max-w-4xl mx-auto flex justify-between items-center text-xs">
+            <button onclick="navigateTo('page-cover')" class="flex flex-col items-center text-slate-600 hover:text-amber-600 font-bold p-1">
+                <span class="text-lg">🏠</span>
+                <span>Beranda</span>
+            </button>
+            <button onclick="navigateTo('page-materi-1')" class="flex flex-col items-center text-slate-600 hover:text-amber-600 font-bold p-1">
+                <span class="text-lg">📖</span>
+                <span>Materi</span>
+            </button>
+            <button onclick="navigateTo('page-aktivitas')" class="flex flex-col items-center text-slate-600 hover:text-amber-600 font-bold p-1">
+                <span class="text-lg">🎯</span>
+                <span>Aktivitas</span>
+            </button>
+            <button onclick="navigateTo('page-game')" class="flex flex-col items-center text-slate-600 hover:text-amber-600 font-bold p-1">
+                <span class="text-lg">🎮</span>
+                <span>Game</span>
+            </button>
+            <button onclick="navigateTo('page-kuis')" class="flex flex-col items-center text-slate-600 hover:text-amber-600 font-bold p-1">
+                <span class="text-lg">❓</span>
+                <span>Kuis</span>
+            </button>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC SYSTEM -->
+    <script>
+        /* ==========================================================================
+           1. STATE & DATA INITIALIZATION
+           ========================================================================== */
+        let globalScore = 0;
+        let currentQuizIndex = 0;
+        let userQuizAnswers = new Array(10).fill(null);
+
+        // Sound Effects (Web Audio API Synthesizer - No External URL Dependencies)
+        const playSound = (type) => {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'success') {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.3);
+                } else if (type === 'error') {
+                    osc.frequency.setValueAtTime(220, ctx.currentTime); // A3
+                    osc.frequency.setValueAtTime(180, ctx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.3);
+                }
+            } catch (e) {
+                console.log('Audio Context error ignored');
+            }
+        };
+
+        // Bank Soal Kuis 10 Soal (Formatif TP 3.1)
+        const quizData = [
+            {
+                q: "1. Karya seni rupa diorama digolongkan sebagai karya tiga dimensi (3D) karena memiliki...",
+                options: ["Panjang dan lebar saja", "Panjang, lebar, dan ruang/kedalaman", "Suara dan wewangian", "Hanya tampak dari depan"],
+                answer: 1,
+                explanation: "Diorama memiliki dimensi panjang, lebar, dan kedalaman (ruang 3D) sehingga dapat dilihat dari berbagai sudut."
+            },
+            {
+                q: "2. Bahan daur ulang buatan yang paling cocok digunakan sebagai kotak tempat wadah panggung diorama adalah...",
+                options: ["Plastik tipis", "Kardus sepatu bekas", "Kertas minyak", "Daun pisang"],
+                answer: 1,
+                explanation: "Kardus sepatu bekas tebal dan kokoh untuk dijadikan bingkai panggung utama diorama."
+            },
+            {
+                q: "3. Mana di antara bahan berikut yang merupakan bahan ALAM yang bisa dimanfaatkan untuk miniatur pohon diorama?",
+                options: ["Botol plastik", "Ranting kayu kering", "Sedotan minuman", "Tutup botol"],
+                answer: 1,
+                explanation: "Ranting kayu kering adalah bahan alami yang teksturnya menyerupai miniatur pohon sungguhan."
+            },
+            {
+                q: "4. Objek miniatur tokoh utama pada diorama sebaiknya diletakkan pada layer bagian...",
+                options: ["Latar Belakang (Background)", "Latar Depan (Foreground)", "Atap Kotak", "Belakang kardus"],
+                answer: 1,
+                explanation: "Tokoh utama diletakkan di Latar Depan (Foreground) agar menjadi pusat perhatian (focal point)."
+            },
+            {
+                q: "5. Langkah pertama yang harus dilakukan sebelum membuat diorama adalah...",
+                options: ["Langsung menempelkan daun", "Menentukan gagasan/tema cerita", "Mewarnai kardus", "Membuang sampah"],
+                answer: 1,
+                explanation: "Langkah pertama selalu merencanakan gagasan atau ide tema cerita yang akan dibuat."
+            },
+            {
+                q: "6. Manfaat memanfaatkan bahan bekas/daur ulang untuk membuat karya diorama adalah...",
+                options: ["Memperbanyak sampah", "Menjaga kebersihan lingkungan & menghemat biaya", "Membuat karya menjadi berat", "Menghabiskan waktu"],
+                answer: 1,
+                explanation: "Menggunakan bahan daur ulang dapat mengurangi sampah lingkungan dan melatih kreativitas bermakna."
+            },
+            {
+                q: "7. Untuk membuat efek relief tebing batu pada diorama, bahan daur ulang yang mudah dibentuk adalah...",
+                options: ["Kertas koran bekas yang diremas", "Kaca tebal", "Besi", "Plastik keras"],
+                answer: 0,
+                explanation: "Remasan kertas koran bekas sangat fleksibel dibentuk menyerupai bukit atau tebing batu."
+            },
+            {
+                q: "8. Dalam susunan 3 layer diorama, gambar awan dan matahari ditempatkan di...",
+                options: ["Layer Latar Depan", "Layer Latar Belakang (Background)", "Layer Tengah", "Dasar lantai"],
+                answer: 1,
+                explanation: "Gambar awan dan langit berada di dinding paling belakang (Latar Belakang)."
+            },
+            {
+                q: "9. Lem kayu atau lem tembak digunakan dalam prosedur diorama untuk...",
+                options: ["Mewarnai gambar", "Merekatkan objek tebal agar tidak mudah lepas", "Menggunting kertas", "Menggambar sketsa"],
+                answer: 1,
+                explanation: "Lem kayu memiliki daya rekat kuat untuk menyatukan bahan alam dan kardus tebal."
+            },
+            {
+                q: "10. Sikap yang mencerminkan rasa syukur atas keindahan alam sekitar saat membuat karya seni adalah...",
+                options: ["Merusak tanaman hidup", "Merawat lingkungan & memanfaatkan bahan alam secara bijak", "Membeli bahan mahal", "Membuang sisa bahan sembarangan"],
+                answer: 1,
+                explanation: "Memanfaatkan bahan alam sekitar dengan bijak dan menjaga kelestarian adalah wujud syukur (Prinsip Mindful)."
+            }
+        ];
+
+        /* ==========================================================================
+           2. NAVIGATION & ROUTING SYSTEM
+           ========================================================================== */
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.add('hidden');
+            });
+
+            // Show target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Render quiz if navigating to quiz page
+            if (pageId === 'page-kuis') {
+                renderQuizQuestion();
+            }
+        }
+
+        function updateScore(points) {
+            globalScore += points;
+            document.getElementById('top-score-display').innerText = `${globalScore} Poin`;
+        }
+
+        /* ==========================================================================
+           3. APERSEPSI LOGIC
+           ========================================================================== */
+        function selectApersepsiOption(btn, text) {
+            const feedback = document.getElementById('apersepsi-feedback');
+            feedback.innerText = text;
+            feedback.classList.remove('hidden');
+            playSound('success');
+        }
+
+        /* ==========================================================================
+           4. DRAG AND DROP LOGIC (AKTIVITAS HANDS-ON)
+           ========================================================================== */
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.add('drag-over');
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.dataTransfer.setData("layer", ev.target.getAttribute('data-layer'));
+        }
+
+        function drop(ev, targetLayer) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove('drag-over');
+            
+            const itemId = ev.dataTransfer.getData("text");
+            const itemLayer = ev.dataTransfer.getData("layer");
+            const itemElem = document.getElementById(itemId);
+            const feedback = document.getElementById('drag-feedback');
+
+            if (itemLayer === targetLayer) {
+                ev.currentTarget.querySelector('.dropped-target').appendChild(itemElem);
+                feedback.className = "p-3 rounded-xl font-bold text-sm text-center bg-emerald-100 text-emerald-800 border border-emerald-300";
+                feedback.innerText = "✨ Tepat Sekali! Posisi layer objek sesuai!";
+                feedback.classList.remove('hidden');
+                updateScore(10);
+                playSound('success');
+            } else {
+                feedback.className = "p-3 rounded-xl font-bold text-sm text-center bg-red-100 text-red-800 border border-red-300 animate-shake";
+                feedback.innerText = "⚠️ Coba lagi! Perhatikan kedalaman posisi objek tersebut.";
+                feedback.classList.remove('hidden');
+                playSound('error');
+            }
+        }
+
+        /* ==========================================================================
+           5. MINI GAME LOGIC (PILAH BAHAN)
+           ========================================================================== */
+        const gameItems = [
+            { name: "Daun Kering Kering", emoji: "🍂", type: "alam" },
+            { name: "Botol Plastik Bekas", emoji: "🧴", type: "daur_ulang" },
+            { name: "Ranting Wood Kayu", emoji: "🪵", type: "alam" },
+            { name: "Kotak Kardus Sepatu", emoji: "📦", type: "daur_ulang" },
+            { name: "Batu Kerikil Sungai", emoji: "🪨", type: "alam" }
+        ];
+        let currentGameIndex = 0;
+
+        function checkGameAnswer(chosenType) {
+            const currentItem = gameItems[currentGameIndex];
+            const banner = document.getElementById('game-feedback-banner');
+
+            if (chosenType === currentItem.type) {
+                banner.className = "mt-4 p-3 rounded-xl font-bold text-sm bg-emerald-100 text-emerald-800 border border-emerald-300";
+                banner.innerText = `🎉 Benar! ${currentItem.name} adalah ${chosenType === 'alam' ? 'Bahan Alam' : 'Bahan Daur Ulang Buatan'}.`;
+                banner.classList.remove('hidden');
+                updateScore(10);
+                playSound('success');
+            } else {
+                banner.className = "mt-4 p-3 rounded-xl font-bold text-sm bg-red-100 text-red-800 border border-red-300 animate-shake";
+                banner.innerText = `❌ Kurang tepat! ${currentItem.name} termasuk ${currentItem.type === 'alam' ? 'Bahan Alam' : 'Bahan Daur Ulang Buatan'}.`;
+                banner.classList.remove('hidden');
+                playSound('error');
+            }
+
+            setTimeout(() => {
+                currentGameIndex = (currentGameIndex + 1) % gameItems.length;
+                document.getElementById('game-item-emoji').innerText = gameItems[currentGameIndex].emoji;
+                document.getElementById('game-item-name').innerText = gameItems[currentGameIndex].name;
+                banner.classList.add('hidden');
+            }, 1500);
+        }
+
+        /* ==========================================================================
+           6. LATIHAN INTERAKTIF LOGIC
+           ========================================================================== */
+        function answerLatihan(questionNo, isCorrect, btnElem, feedbackMessage) {
+            const fbBox = document.getElementById(`latihan-fb-${questionNo}`);
+            
+            // Highlight selected button
+            document.querySelectorAll(`.latihan-opt-${questionNo}`).forEach(b => b.classList.remove('border-emerald-500', 'bg-emerald-50', 'border-red-500', 'bg-red-50'));
+
+            if (isCorrect) {
+                btnElem.classList.add('border-emerald-500', 'bg-emerald-50');
+                fbBox.className = "p-3 rounded-xl text-xs md:text-sm font-bold bg-emerald-100 text-emerald-900 border border-emerald-300";
+                fbBox.innerText = `✅ ${feedbackMessage}`;
+                updateScore(10);
+                playSound('success');
+            } else {
+                btnElem.classList.add('border-red-500', 'bg-red-50');
+                fbBox.className = "p-3 rounded-xl text-xs md:text-sm font-bold bg-red-100 text-red-900 border border-red-300 animate-shake";
+                fbBox.innerText = `💡 Petunjuk: ${feedbackMessage}`;
+                playSound('error');
+            }
+            fbBox.classList.remove('hidden');
+        }
+
+        /* ==========================================================================
+           7. KUIS EVALUATION SYSTEM (10 SOAL)
+           ========================================================================== */
+        function renderQuizQuestion() {
+            const data = quizData[currentQuizIndex];
+            
+            // Progress Update
+            document.getElementById('quiz-progress-text').innerText = `Soal ${currentQuizIndex + 1} dari ${quizData.length}`;
+            document.getElementById('quiz-progress-bar').style.width = `${((currentQuizIndex + 1) / quizData.length) * 100}%`;
+
+            // Question Text
+            document.getElementById('quiz-question-text').innerText = data.q;
+
+            // Options Rendering
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            data.options.forEach((opt, idx) => {
+                const isSelected = userQuizAnswers[currentQuizIndex] === idx;
+                const btn = document.createElement('button');
+                btn.className = `touch-btn p-4 rounded-xl border-2 text-left font-medium text-sm md:text-base transition flex items-center justify-between ${
+                    isSelected ? 'border-amber-500 bg-amber-100 font-bold text-amber-900' : 'border-slate-200 bg-white hover:bg-amber-50 text-slate-700'
+                }`;
+                btn.innerHTML = `
+                    <span>${String.fromCharCode(65 + idx)}. ${opt}</span>
+                    ${isSelected ? '<span class="text-amber-600">✓</span>' : ''}
+                `;
+                btn.onclick = () => selectQuizOption(idx);
+                optionsContainer.appendChild(btn);
+            });
+
+            // Feedback rendering if answered
+            const fbBox = document.getElementById('quiz-feedback-box');
+            if (userQuizAnswers[currentQuizIndex] !== null) {
+                const isCorrect = userQuizAnswers[currentQuizIndex] === data.answer;
+                fbBox.className = `mt-4 p-4 rounded-xl text-sm font-bold border ${
+                    isCorrect ? 'bg-emerald-100 border-emerald-300 text-emerald-900' : 'bg-red-100 border-red-300 text-red-900'
+                }`;
+                fbBox.innerText = (isCorrect ? "✅ JAWABAN BENAR! " : "❌ JAWABAN KURANG TEPAT! ") + data.explanation;
+                fbBox.classList.remove('hidden');
+            } else {
+                fbBox.classList.add('hidden');
+            }
+
+            // Disable/Enable Nav buttons
+            document.getElementById('quiz-prev-btn').disabled = currentQuizIndex === 0;
+            const nextBtn = document.getElementById('quiz-next-btn');
+            if (currentQuizIndex === quizData.length - 1) {
+                nextBtn.innerText = "Lihat Hasil 🏆";
+                nextBtn.className = "touch-btn bg-amber-500 hover:bg-amber-600 text-white font-bold px-8 py-3 rounded-xl shadow-md glow-effect";
+            } else {
+                nextBtn.innerText = "Soal Berikutnya ➡";
+                nextBtn.className = "touch-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl shadow-md";
+            }
+        }
+
+        function selectQuizOption(optionIndex) {
+            userQuizAnswers[currentQuizIndex] = optionIndex;
+            const isCorrect = optionIndex === quizData[currentQuizIndex].answer;
+            if (isCorrect) playSound('success'); else playSound('error');
+            renderQuizQuestion();
+        }
+
+        function prevQuizQuestion() {
+            if (currentQuizIndex > 0) {
+                currentQuizIndex--;
+                renderQuizQuestion();
+            }
+        }
+
+        function nextQuizQuestion() {
+            if (currentQuizIndex < quizData.length - 1) {
+                currentQuizIndex++;
+                renderQuizQuestion();
+            } else {
+                calculateFinalResults();
+            }
+        }
+
+        /* ==========================================================================
+           8. RESULT CALCULATION & RECOMMENDATIONS
+           ========================================================================== */
+        function calculateFinalResults() {
+            let correctCount = 0;
+            userQuizAnswers.forEach((ans, idx) => {
+                if (ans === quizData[idx].answer) {
+                    correctCount++;
+                }
+            });
+
+            const quizScore = correctCount * 10;
+            updateScore(quizScore);
+
+            document.getElementById('final-score').innerText = quizScore;
+            document.getElementById('correct-count').innerText = `${correctCount} / 10`;
+            document.getElementById('wrong-count').innerText = `${10 - correctCount} / 10`;
+
+            const badgeElem = document.getElementById('score-badge');
+            const recoElem = document.getElementById('learning-recommendation');
+
+            if (quizScore >= 80) {
+                badgeElem.innerText = "Luar Biasa! Master Diorama 3D 🎉";
+                badgeElem.className = "inline-block bg-emerald-200 text-emerald-900 font-bold text-xs md:text-sm px-4 py-1.5 rounded-full";
+                recoElem.innerHTML = "<strong>Rekomendasi Belajar:</strong> Pemahamanmu tentang konsep diorama dan pemanfaatan bahan daur ulang sangat matang. Kamu siap melanjutkan ke tahap praktik langsung pembuatan karya!";
+            } else if (quizScore >= 60) {
+                badgeElem.innerText = "Bagus! Tetap Semangat 👍";
+                badgeElem.className = "inline-block bg-amber-200 text-amber-900 font-bold text-xs md:text-sm px-4 py-1.5 rounded-full";
+                recoElem.innerHTML = "<strong>Rekomendasi Belajar:</strong> Pemahamanmu sudah baik, namun disarankan untuk mengulas kembali bagian <em>Prosedur Pemilihan Bahan Alam & 3 Layer Kedalaman</em> agar karyamu makin maksimal.";
+            } else {
+                badgeElem.innerText = "Jangan Patah Semangat! Coba Lagi 💪";
+                badgeElem.className = "inline-block bg-red-200 text-red-900 font-bold text-xs md:text-sm px-4 py-1.5 rounded-full";
+                recoElem.innerHTML = "<strong>Rekomendasi Belajar:</strong> Mari pelajari kembali Materi Bagian 1 & 2 tentang susunan layer diorama dan ikuti game edukasi sekali lagi!";
+            }
+
+            navigateTo('page-hasil');
+        }
+
+        /* ==========================================================================
+           9. REFLEKSI & PENUTUP LOGIC
+           ========================================================================== */
+        let selectedEmoji = '';
+
+        function selectEmojiRefleksi(btn, label) {
+            document.querySelectorAll('.emoji-ref-btn').forEach(b => b.classList.remove('scale-125', 'bg-amber-200', 'rounded-full'));
+            btn.classList.add('scale-125', 'bg-amber-200', 'rounded-full');
+            selectedEmoji = label;
+        }
+
+        function submitRefleksi() {
+            const inputVal = document.getElementById('refleksi-input').value;
+            const fbBox = document.getElementById('refleksi-feedback');
+
+            if (!inputVal && !selectedEmoji) {
+                alert('Pilih emoji perasaan atau tuliskan jawaban refleksi terlebih dahulu ya!');
+                return;
+            }
+
+            fbBox.innerHTML = `
+                🌟 Terima kasih sudah merefleksikan pembelajaranku hari ini!<br>
+                <span class="text-xs font-normal">Perasaan: ${selectedEmoji || 'Senang'} | Rencana Bahan: "${inputVal || 'Kardus & Ranting'}"</span>
+            `;
+            fbBox.classList.remove('hidden');
+            playSound('success');
+        }
+
+        // Initialize default view on load
+        window.onload = function() {
+            navigateTo('page-cover');
+        }
+    </script>
+</body>
+</html>
